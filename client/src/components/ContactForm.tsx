@@ -39,7 +39,19 @@ const ContactForm = () => {
 
   const contactMutation = useMutation({
     mutationFn: async (data: FormValues) => {
-      const response = await apiRequest('POST', '/api/contact', data);
+      // When deployed to Netlify, this will call the Netlify function
+      const response = await fetch('/.netlify/functions/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+      
+      if (!response.ok) {
+        throw new Error('Failed to submit form');
+      }
+      
       return response.json();
     },
     onSuccess: () => {
