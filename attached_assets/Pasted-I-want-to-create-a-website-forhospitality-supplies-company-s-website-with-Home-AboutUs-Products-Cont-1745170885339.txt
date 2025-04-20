@@ -1,0 +1,70 @@
+I want to create a website forhospitality supplies company's website with Home,AboutUs,Products,ContactUs pages along with code for hosting in github(preferable HTML+CSS+JS). Details as follows.
+Company name : Equinox supplies
+Office Location: Qatar, (Business will be focused on middle east especially KSA, Dubai)
+Contact: info@equinoxsupplies.com, 00974 6541239
+
+Content can be as of below
+We liaison with the sole objective to supply world class Hospitality  Cotton Linen Textile Products. As part of our service, we offer Design, Development and Manufacture by taking up the role of a Full service vendor.
+We sell across the GCC  by being at the forefront in the supply of  Hotel Linens; amenities, toiletries, eco-friendly disposables, promotional items, pure leather products and specialized products (naturally made disposable and long use products)  besides Operating Supplies and Equipment (OS & E) .    At the heart of our operations ,  we remain passionate and committed  to be your perfect business partner.  
+
+Each step of product development is carried out with utmost care, from sourcing the materials required to the moment the final product is ready for delivery, we ensure that at every stage of development there is a constant consistency of quality monitoring. Indisputable client satisfaction is our ultimate goal and more than a client and supplier relationship, we value an equal partnership and a long term sustainable business model.
+
+ 
+Our Products:
+Linens
+Luxury bed linens is the hallmark of any good hotel.  SSS is specialized in white hotel bedding with a quality finish, creating a luxurious feel favoured by the most prestigious establishments. Our bed linen collection includes pillowcases, duvet covers, flat sheets , fitted sheets, duvets, pillow protectors, cushions  & pillows and curtains etc.
+ 
+Leather Products:
+ 
+We work towards a common mission of development of custom designed leather products such as bags, belts, shoes, wallets, laptop bags, gym-bags etc for our clients to meet their standards of life with confidence. As one of the leading customised leather products suppliers in the GCC, we  standout  with  handmade leather craftsmanship that has already captured the hearts of our customers.
+ 
+Hotel Amenities 
+ 
+With the arrival of several new hotel brands, competition from short-term rentals, and new technologies, it’s easy to get overwhelmed when trying to make your hotel stand out in the eyes of hotel guests.  Renovating your property is expensive and time consuming but hotel amenities are an easy and high impact way to stand out in your competitive set.  SSS is well equipped to take up such challenges with our high quality products.
+ 
+SSS Amenities products portfolio does cover variety of items ranging from toiletries, personal care, coffee kit, bathrobes, and tissues and so on.
+ 
+ECOFRIENDLY  (Amenities)
+With a keen insight into the well being of our environment, Our eco-friendly products have been designed to reduce unnecessary waste with the use of degradable materials and recycled packaging.  
+ 
+SSS offers a  wide range of eco-friendly amenities such as bamboo made dental kit, shaving kit, combs etc.  Our EF products are hand crafted with specialized technical acumen.
+ 
+We are sure that the aforesaid products will meet your customer satisfaction with sustainability. 
+ 
+OPERATING SUPPLIES AND EQUIPMENT (OS&E)
+ 
+Our goal is to build  long lasting relationships with our esteemed customers, and to remain  as leaders in OS&E.   We offer exceptional value, and understand the customer needs. We conduct business with integrity and honesty, demonstrating a passion with exceptional commitment to the beloved customers and to the market.
+ 
+We offer wide range to OS&E products such as:
+ 
+● Guestrooms ( hangers, kettle, bins, safe box etc )
+● Apartments (includes tableware, utensils etc)
+● Meetings Conference and banquets (includes stackable furniture, AV etc. )
+● Food and beverage (includes tableware, utensils etc)
+● Buffet (includes display, mobile tables, chafers etc)
+● Front of house (includes -trolleys, bins, show polishers etc)
+● Public washrooms (includes- bins tissue box covers etc)
+● Room service (includes trolleys etc)
+● Spa (including massage tables, training equipment)
+Furnishings, 
+
+
+Fixtures and Equipment. (FF&E) 
+ 
+We also offer high quality,  wide range of FF&E products for our customers as per their requirements and it can also be customised to your wishes.
+● Case goods (bedroom headboard, side table, coffee table)
+● Loose furniture   (eg Chairs Tables)
+● Decorative Lighting
+● Chandeliers
+● Mirrors
+● Artwork
+● Curtains
+● Blinds
+● Bed covers
+● Carpet and rugs
+● Beds
+● Signage
+● Plants
+● Hotel Uniforms (Tailor made as per the needs)
+
+Provide proper images pages and beautiful UI based corporate identity. Use basic SEO. provide sample location. Use appropoiate logic to attract specific clients with mena region.
