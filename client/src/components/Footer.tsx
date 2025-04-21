@@ -60,13 +60,13 @@ const Footer = () => {
                 <div className="text-teal-500 mr-3 mt-1">
                   <MapPin className="h-5 w-5" />
                 </div>
-                <span className="text-gray-200">West Bay, Doha, Qatar</span>
+                <span className="text-gray-200">PO Box 3007, Doha, Qatar</span>
               </li>
               <li className="flex items-start">
                 <div className="text-teal-500 mr-3 mt-1">
                   <Phone className="h-5 w-5" />
                 </div>
-                <span className="text-gray-200">+974 6541239</span>
+                <span className="text-gray-200">+974 3125 6838</span>
               </li>
               <li className="flex items-start">
                 <div className="text-teal-500 mr-3 mt-1">

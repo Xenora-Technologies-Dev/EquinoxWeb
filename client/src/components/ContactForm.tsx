@@ -230,7 +230,7 @@ const ContactForm = () => {
                   </div>
                   <div>
                     <h4 className="font-semibold mb-1">Address</h4>
-                    <p className="text-charcoal-400">West Bay, Doha, Qatar</p>
+                    <p className="text-charcoal-400">PO Box 3007, Doha, Qatar</p>
                   </div>
                 </div>
                 
@@ -240,7 +240,7 @@ const ContactForm = () => {
                   </div>
                   <div>
                     <h4 className="font-semibold mb-1">Phone</h4>
-                    <p className="text-charcoal-400">+974 6541239</p>
+                    <p className="text-charcoal-400">+974 3125 6838</p>
                   </div>
                 </div>
                 
