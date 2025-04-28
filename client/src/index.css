@@ -10,4 +10,80 @@
   body {
     @apply font-sans antialiased bg-background text-foreground;
   }
+  
+  /* Enable smooth scrolling for all pages */
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+@layer components {
+  /* Page Transitions */
+  .page-transition {
+    transition: opacity 300ms ease-in-out;
+  }
+  
+  /* Section highlighting effect */
+  @keyframes highlight-pulse {
+    0% { background-color: transparent; }
+    50% { background-color: rgba(20, 184, 166, 0.1); }
+    100% { background-color: transparent; }
+  }
+  
+  .highlight-section {
+    animation: highlight-pulse 1.5s ease-in-out;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+  }
+  
+  /* Product Card Transitions */
+  .category-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .category-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  }
+  
+  /* Category badge styling */
+  .category-badge {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background-color: rgba(20, 184, 166, 0.9);
+    color: white;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    z-index: 10;
+    transition: all 0.3s ease;
+  }
+  
+  /* Floating Contact Icons */
+  .contact-icons {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    z-index: 999;
+  }
+  
+  /* Product details expansion animation */
+  .product-details {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease, opacity 0.3s ease;
+    opacity: 0;
+  }
+  
+  .product-details.expanded {
+    max-height: 1000px;
+    opacity: 1;
+  }
 }

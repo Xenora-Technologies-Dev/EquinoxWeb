@@ -22,7 +22,23 @@ const Products = () => {
       setTimeout(() => {
         const element = document.getElementById(currentHash);
         if (element) {
-          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          // Add a visual indication by briefly highlighting the section
+          element.classList.add('highlight-section');
+          
+          // Scroll with offset for header
+          const headerOffset = 100;
+          const elementPosition = element.getBoundingClientRect().top;
+          const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+          
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: 'smooth'
+          });
+          
+          // Remove highlight after animation completes
+          setTimeout(() => {
+            element.classList.remove('highlight-section');
+          }, 1500);
         } else {
           window.scrollTo({ top: 0, behavior: 'smooth' });
         }
@@ -40,11 +56,22 @@ const Products = () => {
     // Update URL hash
     window.history.pushState(null, '', `#${category}`);
     
-    // Scroll to top of products grid
+    // Add a visual indicator for the transition
+    document.body.classList.add('category-changing');
+    
+    // Scroll to top of products grid with a nice transition
     const categoriesSection = document.getElementById('categories');
     if (categoriesSection) {
-      categoriesSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      categoriesSection.scrollIntoView({ 
+        behavior: 'smooth', 
+        block: 'start'
+      });
     }
+    
+    // Remove visual indicator after transition completes
+    setTimeout(() => {
+      document.body.classList.remove('category-changing');
+    }, 500);
   };
   
   return (
