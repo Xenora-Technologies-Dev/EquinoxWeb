@@ -182,8 +182,17 @@ const Products = () => {
             <h2 className="font-playfair text-3xl font-bold mb-8 text-center">Product Categories Overview</h2>
             
             <div className="space-y-12">
-              <div id="linens" className="scroll-mt-24">
-                <h3 className="font-playfair text-2xl font-semibold mb-4 text-teal-500">Linens</h3>
+              <div id="linens" className="scroll-mt-24 p-6 transition-all duration-300 hover:bg-gray-50 rounded-lg">
+                <h3 className="font-playfair text-2xl font-semibold mb-4 text-teal-500 flex items-center">
+                  <a href="#linens" className="transition-all flex items-center group">
+                    Linens
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" 
+                         className="w-5 h-5 ml-2 opacity-0 group-hover:opacity-100 transition-all translate-x-0 group-hover:translate-x-1">
+                      <path fillRule="evenodd" d="M4.25 5.5a.75.75 0 00-.75.75v8.5c0 .414.336.75.75.75h8.5a.75.75 0 00.75-.75v-4a.75.75 0 011.5 0v4A2.25 2.25 0 0112.75 17h-8.5A2.25 2.25 0 012 14.75v-8.5A2.25 2.25 0 014.25 4h5a.75.75 0 010 1.5h-5z" clipRule="evenodd" />
+                      <path fillRule="evenodd" d="M6.194 12.753a.75.75 0 001.06.053L16.5 4.44v2.81a.75.75 0 001.5 0v-4.5a.75.75 0 00-.75-.75h-4.5a.75.75 0 000 1.5h2.553l-9.056 8.194a.75.75 0 00-.053 1.06z" clipRule="evenodd" />
+                    </svg>
+                  </a>
+                </h3>
                 <p className="text-charcoal-400 mb-4">
                   Luxury bed linens is the hallmark of any good hotel. Equinox Supplies is specialized in white hotel bedding with a quality finish, 
                   creating a luxurious feel favoured by the most prestigious establishments. Our bed linen collection includes pillowcases, duvet covers, 
@@ -195,8 +204,17 @@ const Products = () => {
                 </p>
               </div>
               
-              <div id="leather" className="scroll-mt-24">
-                <h3 className="font-playfair text-2xl font-semibold mb-4 text-teal-500">Leather Products</h3>
+              <div id="leather" className="scroll-mt-24 p-6 transition-all duration-300 hover:bg-gray-50 rounded-lg">
+                <h3 className="font-playfair text-2xl font-semibold mb-4 text-teal-500 flex items-center">
+                  <a href="#leather" className="transition-all flex items-center group">
+                    Leather Products
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" 
+                         className="w-5 h-5 ml-2 opacity-0 group-hover:opacity-100 transition-all translate-x-0 group-hover:translate-x-1">
+                      <path fillRule="evenodd" d="M4.25 5.5a.75.75 0 00-.75.75v8.5c0 .414.336.75.75.75h8.5a.75.75 0 00.75-.75v-4a.75.75 0 011.5 0v4A2.25 2.25 0 0112.75 17h-8.5A2.25 2.25 0 012 14.75v-8.5A2.25 2.25 0 014.25 4h5a.75.75 0 010 1.5h-5z" clipRule="evenodd" />
+                      <path fillRule="evenodd" d="M6.194 12.753a.75.75 0 001.06.053L16.5 4.44v2.81a.75.75 0 001.5 0v-4.5a.75.75 0 00-.75-.75h-4.5a.75.75 0 000 1.5h2.553l-9.056 8.194a.75.75 0 00-.053 1.06z" clipRule="evenodd" />
+                    </svg>
+                  </a>
+                </h3>
                 <p className="text-charcoal-400 mb-4">
                   We work towards a common mission of development of custom designed leather products for our clients to meet their standards with confidence. 
                   As one of the leading customized leather products suppliers in the GCC, we stand out with handmade leather craftsmanship that has already 
@@ -243,8 +261,17 @@ const Products = () => {
                 </div>
               </div>
               
-              <div id="amenities" className="scroll-mt-24">
-                <h3 className="font-playfair text-2xl font-semibold mb-4 text-teal-500">Hotel Amenities</h3>
+              <div id="amenities" className="scroll-mt-24 p-6 transition-all duration-300 hover:bg-gray-50 rounded-lg">
+                <h3 className="font-playfair text-2xl font-semibold mb-4 text-teal-500 flex items-center">
+                  <a href="#amenities" className="transition-all flex items-center group">
+                    Hotel Amenities
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" 
+                         className="w-5 h-5 ml-2 opacity-0 group-hover:opacity-100 transition-all translate-x-0 group-hover:translate-x-1">
+                      <path fillRule="evenodd" d="M4.25 5.5a.75.75 0 00-.75.75v8.5c0 .414.336.75.75.75h8.5a.75.75 0 00.75-.75v-4a.75.75 0 011.5 0v4A2.25 2.25 0 0112.75 17h-8.5A2.25 2.25 0 012 14.75v-8.5A2.25 2.25 0 014.25 4h5a.75.75 0 010 1.5h-5z" clipRule="evenodd" />
+                      <path fillRule="evenodd" d="M6.194 12.753a.75.75 0 001.06.053L16.5 4.44v2.81a.75.75 0 001.5 0v-4.5a.75.75 0 00-.75-.75h-4.5a.75.75 0 000 1.5h2.553l-9.056 8.194a.75.75 0 00-.053 1.06z" clipRule="evenodd" />
+                    </svg>
+                  </a>
+                </h3>
                 <p className="text-charcoal-400 mb-4">
                   With the arrival of several new hotel brands, competition from short-term rentals, and new technologies, it's easy to get overwhelmed 
                   when trying to make your hotel stand out in the eyes of guests. Renovating your property is expensive and time-consuming, but 
@@ -318,8 +345,17 @@ const Products = () => {
                 </p>
               </div>
               
-              <div id="eco" className="scroll-mt-24">
-                <h3 className="font-playfair text-2xl font-semibold mb-4 text-teal-500">Eco-Friendly Products</h3>
+              <div id="eco" className="scroll-mt-24 p-6 transition-all duration-300 hover:bg-gray-50 rounded-lg">
+                <h3 className="font-playfair text-2xl font-semibold mb-4 text-teal-500 flex items-center">
+                  <a href="#eco" className="transition-all flex items-center group">
+                    Eco-Friendly Products
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" 
+                         className="w-5 h-5 ml-2 opacity-0 group-hover:opacity-100 transition-all translate-x-0 group-hover:translate-x-1">
+                      <path fillRule="evenodd" d="M4.25 5.5a.75.75 0 00-.75.75v8.5c0 .414.336.75.75.75h8.5a.75.75 0 00.75-.75v-4a.75.75 0 011.5 0v4A2.25 2.25 0 0112.75 17h-8.5A2.25 2.25 0 012 14.75v-8.5A2.25 2.25 0 014.25 4h5a.75.75 0 010 1.5h-5z" clipRule="evenodd" />
+                      <path fillRule="evenodd" d="M6.194 12.753a.75.75 0 001.06.053L16.5 4.44v2.81a.75.75 0 001.5 0v-4.5a.75.75 0 00-.75-.75h-4.5a.75.75 0 000 1.5h2.553l-9.056 8.194a.75.75 0 00-.053 1.06z" clipRule="evenodd" />
+                    </svg>
+                  </a>
+                </h3>
                 <p className="text-charcoal-400 mb-4">
                   With a keen insight into the wellbeing of our environment, our eco-friendly products have been designed to reduce unnecessary waste 
                   with the use of biodegradable materials and recyclable packaging. We believe in promoting sustainable hospitality practices.
@@ -353,8 +389,17 @@ const Products = () => {
                 </p>
               </div>
               
-              <div id="os-e" className="scroll-mt-24">
-                <h3 className="font-playfair text-2xl font-semibold mb-4 text-teal-500">Operating Supplies and Equipment (OS&E)</h3>
+              <div id="os-e" className="scroll-mt-24 p-6 transition-all duration-300 hover:bg-gray-50 rounded-lg">
+                <h3 className="font-playfair text-2xl font-semibold mb-4 text-teal-500 flex items-center">
+                  <a href="#os-e" className="transition-all flex items-center group">
+                    Operating Supplies and Equipment (OS&E)
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" 
+                         className="w-5 h-5 ml-2 opacity-0 group-hover:opacity-100 transition-all translate-x-0 group-hover:translate-x-1">
+                      <path fillRule="evenodd" d="M4.25 5.5a.75.75 0 00-.75.75v8.5c0 .414.336.75.75.75h8.5a.75.75 0 00.75-.75v-4a.75.75 0 011.5 0v4A2.25 2.25 0 0112.75 17h-8.5A2.25 2.25 0 012 14.75v-8.5A2.25 2.25 0 014.25 4h5a.75.75 0 010 1.5h-5z" clipRule="evenodd" />
+                      <path fillRule="evenodd" d="M6.194 12.753a.75.75 0 001.06.053L16.5 4.44v2.81a.75.75 0 001.5 0v-4.5a.75.75 0 00-.75-.75h-4.5a.75.75 0 000 1.5h2.553l-9.056 8.194a.75.75 0 00-.053 1.06z" clipRule="evenodd" />
+                    </svg>
+                  </a>
+                </h3>
                 <p className="text-charcoal-400 mb-4">
                   Our goal is to build long lasting relationships with our esteemed customers, and to remain as leaders in OS&E. 
                   We offer exceptional value, and understand the customer needs. We conduct business with integrity and honesty, 
@@ -376,8 +421,17 @@ const Products = () => {
                 </ul>
               </div>
               
-              <div id="ff-e" className="scroll-mt-24">
-                <h3 className="font-playfair text-2xl font-semibold mb-4 text-teal-500">Furnishings, Fixtures and Equipment (FF&E)</h3>
+              <div id="ff-e" className="scroll-mt-24 p-6 transition-all duration-300 hover:bg-gray-50 rounded-lg">
+                <h3 className="font-playfair text-2xl font-semibold mb-4 text-teal-500 flex items-center">
+                  <a href="#ff-e" className="transition-all flex items-center group">
+                    Furnishings, Fixtures and Equipment (FF&E)
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" 
+                         className="w-5 h-5 ml-2 opacity-0 group-hover:opacity-100 transition-all translate-x-0 group-hover:translate-x-1">
+                      <path fillRule="evenodd" d="M4.25 5.5a.75.75 0 00-.75.75v8.5c0 .414.336.75.75.75h8.5a.75.75 0 00.75-.75v-4a.75.75 0 011.5 0v4A2.25 2.25 0 0112.75 17h-8.5A2.25 2.25 0 012 14.75v-8.5A2.25 2.25 0 014.25 4h5a.75.75 0 010 1.5h-5z" clipRule="evenodd" />
+                      <path fillRule="evenodd" d="M6.194 12.753a.75.75 0 001.06.053L16.5 4.44v2.81a.75.75 0 001.5 0v-4.5a.75.75 0 00-.75-.75h-4.5a.75.75 0 000 1.5h2.553l-9.056 8.194a.75.75 0 00-.053 1.06z" clipRule="evenodd" />
+                    </svg>
+                  </a>
+                </h3>
                 <p className="text-charcoal-400 mb-4">
                   We also offer high quality, wide range of FF&E products for our customers as per their requirements and it can also be customised 
                   to your wishes.

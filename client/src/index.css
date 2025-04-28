@@ -36,6 +36,24 @@
     transition: all 0.3s ease;
   }
   
+  /* Category transition effect */
+  @keyframes fade-transform {
+    0% { opacity: 0; transform: translateY(10px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+  
+  .category-changing .grid {
+    transition: opacity 0.5s ease-out;
+  }
+  
+  body.category-changing {
+    cursor: progress;
+  }
+  
+  .category-card {
+    animation: fade-transform 0.5s ease-out;
+  }
+  
   /* Product Card Transitions */
   .category-card {
     transition: transform 0.3s ease, box-shadow 0.3s ease;
