@@ -17,6 +17,18 @@ const Products = () => {
     if (currentHash) {
       setHash(currentHash);
       setActiveCategory(currentHash);
+      
+      // Scroll to the category section if it exists
+      setTimeout(() => {
+        const element = document.getElementById(currentHash);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        } else {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+      }, 100);
+    } else {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
     
     // Filter products based on active category
@@ -27,6 +39,12 @@ const Products = () => {
     setActiveCategory(category);
     // Update URL hash
     window.history.pushState(null, '', `#${category}`);
+    
+    // Scroll to top of products grid
+    const categoriesSection = document.getElementById('categories');
+    if (categoriesSection) {
+      categoriesSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
   };
   
   return (
@@ -116,6 +134,9 @@ const Products = () => {
                 linkText="Request Details"
                 icon={<ArrowRight className="ml-2 h-4 w-4" />}
                 category={product.category}
+                details={product.details}
+                features={product.features}
+                materials={product.materials}
               />
             ))}
           </div>
@@ -150,40 +171,158 @@ const Products = () => {
               <div id="leather" className="scroll-mt-24">
                 <h3 className="font-playfair text-2xl font-semibold mb-4 text-teal-500">Leather Products</h3>
                 <p className="text-charcoal-400 mb-4">
-                  We work towards a common mission of development of custom designed leather products such as bags, belts, shoes, wallets, laptop bags, 
-                  gym-bags etc for our clients to meet their standards of life with confidence. As one of the leading customised leather products suppliers 
-                  in the GCC, we standout with handmade leather craftsmanship that has already captured the hearts of our customers.
+                  We work towards a common mission of development of custom designed leather products for our clients to meet their standards with confidence. 
+                  As one of the leading customized leather products suppliers in the GCC, we stand out with handmade leather craftsmanship that has already 
+                  captured the hearts of our customers.
                 </p>
-                <p className="text-charcoal-400">
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                  <div className="bg-white p-5 rounded-lg shadow-sm">
+                    <h4 className="font-medium text-teal-600 mb-2">Corporate Leather Gifts</h4>
+                    <ul className="text-charcoal-400 list-disc pl-5 space-y-1">
+                      <li>Customized leather portfolios and folders</li>
+                      <li>Business card holders and wallets</li>
+                      <li>Executive desk accessories</li>
+                      <li>Branded luggage tags</li>
+                      <li>Elegant presentation boxes for VIP guests</li>
+                    </ul>
+                  </div>
+                  <div className="bg-white p-5 rounded-lg shadow-sm">
+                    <h4 className="font-medium text-teal-600 mb-2">Premium Leather Bags & Luggage</h4>
+                    <ul className="text-charcoal-400 list-disc pl-5 space-y-1">
+                      <li>Travel bags and luggage sets</li>
+                      <li>Laptop and document bags</li>
+                      <li>Custom gym and sports bags</li>
+                      <li>Elegant backpacks and shoulder bags</li>
+                      <li>Special event and conference bags</li>
+                    </ul>
+                  </div>
+                </div>
+                
+                <p className="text-charcoal-400 mb-4">
                   Our artisans use premium full-grain and top-grain leather sourced ethically, ensuring durability and luxurious aesthetics. 
                   Each piece can be customized with hotel logos, patterns, and even guest names for a truly personalized experience.
                 </p>
+                
+                <div className="bg-teal-50 p-5 rounded-lg">
+                  <h4 className="font-medium text-teal-700 mb-3">Our Leather Craftsmanship Process</h4>
+                  <ol className="list-decimal pl-5 text-charcoal-500 space-y-2">
+                    <li><span className="font-medium">Premium Material Selection:</span> We use only the finest quality leather that ages beautifully and stands the test of time.</li>
+                    <li><span className="font-medium">Customization:</span> We work closely with clients to incorporate their branding elements and specific requirements.</li>
+                    <li><span className="font-medium">Hand-Crafting:</span> Our skilled artisans handcraft each piece with meticulous attention to detail.</li>
+                    <li><span className="font-medium">Quality Assurance:</span> Every product undergoes rigorous quality checks before delivery.</li>
+                    <li><span className="font-medium">After-Sales Support:</span> We stand behind our products with excellent customer service and maintenance advice.</li>
+                  </ol>
+                </div>
               </div>
               
               <div id="amenities" className="scroll-mt-24">
                 <h3 className="font-playfair text-2xl font-semibold mb-4 text-teal-500">Hotel Amenities</h3>
                 <p className="text-charcoal-400 mb-4">
                   With the arrival of several new hotel brands, competition from short-term rentals, and new technologies, it's easy to get overwhelmed 
-                  when trying to make your hotel stand out in the eyes of hotel guests. Renovating your property is expensive and time consuming but 
-                  hotel amenities are an easy and high impact way to stand out in your competitive set. Equinox Supplies is well equipped to take up such 
-                  challenges with our high quality products.
+                  when trying to make your hotel stand out in the eyes of guests. Renovating your property is expensive and time-consuming, but 
+                  hotel amenities are an easy and high-impact way to stand out in your competitive set. Equinox Supplies is well equipped to take up such 
+                  challenges with our high-quality products.
                 </p>
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                  <div className="bg-white p-5 rounded-lg shadow-sm">
+                    <h4 className="font-medium text-teal-600 mb-2">Premium Bathroom Amenities</h4>
+                    <ul className="text-charcoal-400 list-disc pl-5 space-y-1">
+                      <li>Luxury soaps and bath products</li>
+                      <li>Custom-formulated shampoos and conditioners</li>
+                      <li>Body lotions and moisturizers</li>
+                      <li>Hotel-branded packaging</li>
+                      <li>Luxurious dispenser systems</li>
+                    </ul>
+                  </div>
+                  <div className="bg-white p-5 rounded-lg shadow-sm">
+                    <h4 className="font-medium text-teal-600 mb-2">Guest Comfort Items</h4>
+                    <ul className="text-charcoal-400 list-disc pl-5 space-y-1">
+                      <li>Premium bathrobes and slippers</li>
+                      <li>Luxury dental and shaving kits</li>
+                      <li>Sleep enhancement products</li>
+                      <li>Coffee and tea service kits</li>
+                      <li>Custom amenity trays and holders</li>
+                    </ul>
+                  </div>
+                </div>
+                
+                <div className="bg-gradient-to-r from-teal-50 to-gray-50 p-6 rounded-lg mb-6">
+                  <h4 className="font-medium text-teal-700 mb-3">Why Our Amenities Stand Out</h4>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div className="text-center p-4">
+                      <div className="text-teal-500 mb-3 flex justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-10 h-10">
+                          <path fillRule="evenodd" d="M12 1.5a.75.75 0 01.75.75V4.5a.75.75 0 01-1.5 0V2.25A.75.75 0 0112 1.5zM5.636 4.136a.75.75 0 011.06 0l1.592 1.591a.75.75 0 01-1.061 1.06l-1.591-1.59a.75.75 0 010-1.061zm12.728 0a.75.75 0 010 1.06l-1.591 1.592a.75.75 0 01-1.06-1.061l1.59-1.591a.75.75 0 011.061 0zm-6.816 4.496a.75.75 0 01.82.311l5.228 7.917a.75.75 0 01-.777 1.148l-2.097-.43 1.045 3.9a.75.75 0 01-1.45.388l-1.044-3.899-1.601 1.42a.75.75 0 01-1.247-.606l.569-9.47a.75.75 0 01.554-.68zM3 10.5a.75.75 0 01.75-.75H6a.75.75 0 010 1.5H3.75A.75.75 0 013 10.5zm14.25 0a.75.75 0 01.75-.75h2.25a.75.75 0 010 1.5H18a.75.75 0 01-.75-.75zm-8.962 3.712a.75.75 0 010 1.061l-1.591 1.591a.75.75 0 11-1.061-1.06l1.591-1.592a.75.75 0 011.06 0z" clipRule="evenodd" />
+                        </svg>
+                      </div>
+                      <h5 className="font-medium mb-1">Premium Quality</h5>
+                      <p className="text-sm text-charcoal-500">Sourced from leading manufacturers with stringent quality controls</p>
+                    </div>
+                    <div className="text-center p-4">
+                      <div className="text-teal-500 mb-3 flex justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-10 h-10">
+                          <path d="M21.731 2.269a2.625 2.625 0 00-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 000-3.712zM19.513 8.199l-3.712-3.712-8.4 8.4a5.25 5.25 0 00-1.32 2.214l-.8 2.685a.75.75 0 00.933.933l2.685-.8a5.25 5.25 0 002.214-1.32l8.4-8.4z" />
+                          <path d="M5.25 5.25a3 3 0 00-3 3v10.5a3 3 0 003 3h10.5a3 3 0 003-3V13.5a.75.75 0 00-1.5 0v5.25a1.5 1.5 0 01-1.5 1.5H5.25a1.5 1.5 0 01-1.5-1.5V8.25a1.5 1.5 0 011.5-1.5h5.25a.75.75 0 000-1.5H5.25z" />
+                        </svg>
+                      </div>
+                      <h5 className="font-medium mb-1">Customization</h5>
+                      <p className="text-sm text-charcoal-500">Tailored to your brand with custom packaging, scents, and formulations</p>
+                    </div>
+                    <div className="text-center p-4">
+                      <div className="text-teal-500 mb-3 flex justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-10 h-10">
+                          <path fillRule="evenodd" d="M12.963 2.286a.75.75 0 00-1.071-.136 9.742 9.742 0 00-3.539 6.177A7.547 7.547 0 016.648 6.61a.75.75 0 00-1.152.082A9 9 0 1017.25 10.5a.75.75 0 10-1.5 0 7.5 7.5 0 11-1.769-4.858l.463.171a.75.75 0 10.522-1.41l-.464-.172a.75.75 0 00-.497 0A9.74 9.74 0 0012.963 2.286z" clipRule="evenodd" />
+                          <path fillRule="evenodd" d="M16.5 10.5a.75.75 0 01-.75.75h-3a.75.75 0 010-1.5h3a.75.75 0 01.75.75z" clipRule="evenodd" />
+                        </svg>
+                      </div>
+                      <h5 className="font-medium mb-1">Timely Delivery</h5>
+                      <p className="text-sm text-charcoal-500">Reliable supply chain ensuring your amenities arrive when needed</p>
+                    </div>
+                  </div>
+                </div>
+                
                 <p className="text-charcoal-400">
-                  Our Amenities products portfolio covers variety of items ranging from toiletries, personal care, coffee kit, bathrobes, and tissues and so on.
-                  We partner with luxury cosmetic brands to create bespoke formulations that speak to the discerning tastes of your guests while embodying your hotel's identity.
+                  Our amenities product portfolio covers a variety of items ranging from toiletries, personal care, coffee kits, bathrobes, and tissues.
+                  We partner with luxury cosmetic brands to create bespoke formulations that speak to the discerning tastes of your guests while embodying 
+                  your hotel's unique identity. Whether you're looking for economical options or ultra-luxury amenities, we have solutions to meet every 
+                  budget and brand standard.
                 </p>
               </div>
               
               <div id="eco" className="scroll-mt-24">
                 <h3 className="font-playfair text-2xl font-semibold mb-4 text-teal-500">Eco-Friendly Products</h3>
                 <p className="text-charcoal-400 mb-4">
-                  With a keen insight into the well being of our environment, Our eco-friendly products have been designed to reduce unnecessary waste 
-                  with the use of degradable materials and recycled packaging.
+                  With a keen insight into the wellbeing of our environment, our eco-friendly products have been designed to reduce unnecessary waste 
+                  with the use of biodegradable materials and recyclable packaging. We believe in promoting sustainable hospitality practices.
                 </p>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                  <div className="bg-white p-5 rounded-lg shadow-sm">
+                    <h4 className="font-medium text-teal-600 mb-2">Bamboo Toothbrushes & Dental Kits</h4>
+                    <ul className="text-charcoal-400 list-disc pl-5 space-y-1">
+                      <li>S-curve design for adults and C-curve for children</li>
+                      <li>Biodegradable bamboo handle</li>
+                      <li>Plant-based bristles</li>
+                      <li>Environmentally friendly packaging</li>
+                      <li>Custom branding options available</li>
+                    </ul>
+                  </div>
+                  <div className="bg-white p-5 rounded-lg shadow-sm">
+                    <h4 className="font-medium text-teal-600 mb-2">Natural Bath Accessories</h4>
+                    <ul className="text-charcoal-400 list-disc pl-5 space-y-1">
+                      <li>Neem combs in various designs</li>
+                      <li>Wooden shaving razors</li>
+                      <li>Jute loofah for natural exfoliation</li>
+                      <li>Bamboo tongue cleaners</li>
+                      <li>Bamboo and coconut drinking straws</li>
+                    </ul>
+                  </div>
+                </div>
                 <p className="text-charcoal-400">
-                  Equinox Supplies offers a wide range of eco-friendly amenities such as bamboo made dental kit, shaving kit, combs etc. 
-                  Our eco-friendly products are hand crafted with specialized technical acumen. We are sure that these products will meet your customer 
-                  satisfaction with sustainability.
+                  Equinox Supplies is committed to sustainable hospitality solutions that don't compromise on quality or guest experience. Our eco-friendly 
+                  products are crafted with specialized technical expertise to ensure durability and performance while minimizing environmental impact. 
+                  By choosing our sustainable products, you're not only enhancing your guest experience but also demonstrating your commitment to environmental responsibility.
                 </p>
               </div>
               
