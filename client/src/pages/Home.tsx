@@ -36,11 +36,11 @@ const Home = () => {
       
       <WhyChooseUs />
       
-      <Testimonials 
+      {/* <Testimonials 
         title="What Our Clients Say"
         subtitle="Hear from luxury hotels and resorts across the MENA region who trust Equinox Supplies."
         testimonials={testimonials}
-      />
+      /> */}
       
       <CTASection 
         title="Ready to Elevate Your Hospitality Experience?"

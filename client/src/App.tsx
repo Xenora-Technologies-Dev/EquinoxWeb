@@ -1,34 +1,34 @@
-import { Switch, Route, useLocation } from "wouter";
-import { queryClient } from "./lib/queryClient";
-import { QueryClientProvider } from "@tanstack/react-query";
-import { Toaster } from "@/components/ui/toaster";
-import { TooltipProvider } from "@/components/ui/tooltip";
-import NotFound from "@/pages/not-found";
-import Navigation from "@/components/Navigation";
-import Footer from "@/components/Footer";
-import FloatingContactIcons from "@/components/FloatingContactIcons";
-import PageTransition from "@/components/PageTransition";
-import Home from "@/pages/Home";
-import About from "@/pages/About";
-import Products from "@/pages/Products";
-import Contact from "@/pages/Contact";
-import { useEffect } from "react";
+import { Router as WouterRouter, Switch, Route, useLocation } from 'wouter'; // Import Wouter components
+import { queryClient } from './lib/queryClient';
+import { QueryClientProvider } from '@tanstack/react-query';
+import { Toaster } from '@/components/ui/toaster';
+import { TooltipProvider } from '@/components/ui/tooltip';
+import NotFound from '@/pages/not-found';
+import Navigation from '@/components/Navigation';
+import Footer from '@/components/Footer';
+import FloatingContactIcons from '@/components/FloatingContactIcons';
+import PageTransition from '@/components/PageTransition';
+import Home from '@/pages/Home';
+import About from '@/pages/About';
+import Products from '@/pages/Products';
+import Contact from '@/pages/Contact';
+import { useEffect } from 'react';
 
 // Scroll restoration functionality
 const ScrollToTop = () => {
-  const [location] = useLocation();
-  
+  const [location] = useLocation(); // Using Wouter's useLocation
+
   useEffect(() => {
     // Only scroll to top if not a hash navigation
     if (!location.includes('#')) {
       window.scrollTo(0, 0);
     }
   }, [location]);
-  
+
   return null;
 };
 
-function Router() {
+function RouterComponent() {
   return (
     <div className="font-raleway text-charcoal-500 bg-white">
       <ScrollToTop />
@@ -53,7 +53,10 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
         <Toaster />
-        <Router />
+        {/* Wrap routes in Wouter's Router context */}
+        <WouterRouter>
+          <RouterComponent />
+        </WouterRouter>
       </TooltipProvider>
     </QueryClientProvider>
   );
