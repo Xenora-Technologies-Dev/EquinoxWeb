@@ -5,7 +5,7 @@ import Hero from '@/components/Hero';
 import ProductCard from '@/components/ProductCard';
 import CTASection from '@/components/CTASection';
 import { allProducts, getProductsByCategory } from '@/lib/products';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Star } from 'lucide-react';
 
 interface ProductSlideshowProps {
   images: string[];
@@ -14,34 +14,56 @@ interface ProductSlideshowProps {
 
 const ProductSlideshow = ({ images, category }: ProductSlideshowProps) => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    if (images.length > 0) {
+      const img = new Image();
+      img.src = images[0];
+      img.onload = () => setIsLoading(false);
+    }
+  }, [images]);
+
+  useEffect(() => {
+    if (isPaused) return;
     const interval = setInterval(() => {
       setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
-    }, 3000); // Change slide every 3 seconds
+    }, 3000);
     return () => clearInterval(interval);
-  }, [images.length]);
+  }, [images.length, isPaused]);
 
   return (
-    <div className="relative w-full h-64 md:h-80 lg:h-96 overflow-hidden rounded-lg mb-8">
+    <div
+      className="relative w-full h-48 sm:h-64 md:h-80 lg:h-96 overflow-hidden rounded-xl mb-8"
+      onMouseEnter={() => setIsPaused(true)}
+      onMouseLeave={() => setIsPaused(false)}
+      role="region"
+      aria-label={`${category} product slideshow`}
+    >
+      {isLoading && (
+        <div className="absolute inset-0 bg-gray-200 animate-pulse rounded-xl" />
+      )}
       {images.map((image: string, index: number) => (
         <img
           key={index}
           src={image}
           alt={`${category} product ${index + 1}`}
-          className={`absolute top-0 left-0 w-full h-full object-cover transition-opacity duration-500 ${
+          className={`absolute top-0 left-0 w-full h-full object-cover transition-opacity duration-700 ease-in-out ${
             index === currentIndex ? 'opacity-100' : 'opacity-0'
-          }`}
+          } ${isLoading ? 'hidden' : ''}`}
+          loading={index === 0 ? 'eager' : 'lazy'}
         />
       ))}
       <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
-        {images.map((image: string, index: number) => (
+        {images.map((_, index: number) => (
           <button
             key={index}
-            className={`w-3 h-3 rounded-full ${
-              index === currentIndex ? 'bg-teal-500' : 'bg-gray-300'
+            className={`w-3 h-3 rounded-full transition-all ${
+              index === currentIndex ? 'bg-teal-500 scale-125' : 'bg-gray-300 hover:bg-gray-400'
             }`}
             onClick={() => setCurrentIndex(index)}
+            aria-label={`Go to slide ${index + 1}`}
           />
         ))}
       </div>
@@ -54,84 +76,83 @@ const Products = () => {
   const [filteredProducts, setFilteredProducts] = useState(allProducts);
   const [location, setLocation] = useLocation();
 
-  // Define slideshow images for each category
   const slideshowImages: { [key: string]: string[] } = {
     linens: [
-      'https://images.unsplash.com/photo-1616627561839-074385245ff6?ixlib=rb-4.0.3&auto=format&fit=crop&w=1500&q=80', // Bed linens
-      'https://images.unsplash.com/photo-1584100936595-ea098e697336?ixlib=rb-4.0.3&auto=format&fit=crop&w=1500&q=80', // Pillows
-      'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1500&q=80', // Duvet
-      'https://images.unsplash.com/photo-1595573303607-b1f01e662a33?ixlib=rb-4.0.3&auto=format&fit=crop&w=1500&q=80', // Curtains
+      'https://images.unsplash.com/photo-1616627561839-074385245ff6?ixlib=rb-4.0.3&auto=format&fit=crop&w=1500&q=80',
+      '/images/wow-s1.jpg',
+      '/images/bed-linen3.jpg',
+      '/images/curtains3.jpg',
+    ],
+    gifts: [
+      '/images/Luxury-Corporate-Gifts.png',
+      '/images/leather-corporate-gift-ideas-10.jpg', 
+      '/images/CorporateGift1.png', 
+      '/images/leather-corporate-gift-ideas-7.jpg'// Branded item
     ],
     eco: [
-      'https://images.unsplash.com/photo-1607619052223-d594832bc29d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1500&q=80',
-      'https://images.unsplash.com/photo-1598965676235-83b2b4f7d8b8?ixlib=rb-4.0.3&auto=format&fit=crop&w=1500&q=80', // Jute loofah
-      'https://images.unsplash.com/photo-1606851441832-995d0f6c76f1?ixlib=rb-4.0.3&auto=format&fit=crop&w=1500&q=80', // Bamboo straws
-      'https://images.unsplash.com/photo-1620220131388-34f714448bba?ixlib=rb-4.0.3&auto=format&fit=crop&w=1500&q=80', // Natural comb
+      '/images/bamboo-shaving-kit.webp',
+      '/images/bamboo-tooth-dental-kit.webp',
+      '/images/bamboo-straw.jpeg',
+      '/images/handmade-bamboo-bottles.webp',
     ],
     leather: [
-      'https://images.unsplash.com/photo-1605733513597-a8f834bd6461?ixlib=rb-4.0.3&auto=format&fit=crop&w=1500&q=80', // Ladies bag
-      'https://images.unsplash.com/photo-1608231387042-66d1773070a5?ixlib=rb-4.0.3&auto=format&fit=crop&w=1500&q=80', // Leather shoes
-      'https://images.unsplash.com/photo-1596399908039-9c66e304d317?ixlib=rb-4.0.3&auto=format&fit=crop&w=1500&q=80', // Leather wallet
-      'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=615&q=80', // Promotional item (portfolio)
+      '/images/Hotel-Leather-Products.avif', // Leather shoes
+      '/images/DifferentTypesOfBags.png', // Leather bag
+      '/images/LeatherGifts.png', // Portfolio
+      '/images/LeatherDesk.jpg', // Wallet
     ],
     amenities: [
-      'https://images.unsplash.com/photo-1596755094514-f87e34085b2c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1500&q=80', // Luxury soap
-      'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1500&q=80', // Shampoo
-      'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1500&q=80', // Bathrobe
-      'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1500&q=80', // Coffee kit
+      '/images/hotel-room-amenities.jpg',
+      '/images/Amenities2.jpg',
+      '/images/HotelAmaneties1.webp',
+      '/images/Amenities1.jpg'
     ],
     'os-e': [
-      'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1500&q=80', // Hangers
-      'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1500&q=80', // Kettle
-      'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1500&q=80', // Safe box
-      'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1500&q=80', // Trolley
+      '/images/OS&E1.webp',
+      '/images/BasicOSE.jpg',
+      '/images/hotelOSE2.jpeg',
+      '/images/GuestRoom.jpeg',
     ],
     'ff-e': [
-      'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1500&q=80', // Headboard
-      'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1500&q=80', // Chandelier
-      'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1500&q=80', // Mirror
-      'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1500&q=80', // Curtains
+      '/images/HotelFurniture1.jpeg',
+      '/images/DecorativeLight.jpeg',
+      '/images/HotelArt.avif',
+      '/images/HotelUnoiform.png',
+      '/images/HotelCarpet.avif',
     ],
   };
 
   useEffect(() => {
-    // Handle hash-based navigation
     const currentHash = location.split('#')[1] || '';
+    setActiveCategory(currentHash || 'all');
 
-    if (currentHash) {
-      setActiveCategory(currentHash);
-      setTimeout(() => {
-        const element = document.getElementById(currentHash);
-        if (element) {
-          element.classList.add('highlight-section');
-          const headerOffset = 100;
-          const elementPosition = element.getBoundingClientRect().top;
-          const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+    setTimeout(() => {
+      const element = document.getElementById(currentHash);
+      if (element) {
+        element.classList.add('highlight-section', 'animate-fade-in');
+        const headerOffset = 120;
+        const elementPosition = element.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
 
-          window.scrollTo({
-            top: offsetPosition,
-            behavior: 'smooth',
-          });
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth',
+        });
 
-          setTimeout(() => {
-            element.classList.remove('highlight-section');
-          }, 1500);
-        } else {
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-      }, 100);
-    } else {
-      setActiveCategory('all');
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
+        setTimeout(() => {
+          element.classList.remove('highlight-section', 'animate-fade-in');
+        }, 1500);
+      } else {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    }, 100);
 
-    // Filter products
     setFilteredProducts(getProductsByCategory(currentHash || 'all'));
   }, [location]);
 
   const handleCategoryChange = (category: string) => {
     setActiveCategory(category);
-    setLocation(`/products#${category}`);
+    // setLocation(`/products#${category}`);
 
     document.body.classList.add('category-changing');
     const categoriesSection = document.getElementById('categories');
@@ -147,47 +168,64 @@ const Products = () => {
     }, 500);
   };
 
+  const handleQuickView = (product: any) => {
+    // Placeholder for quick view modal
+    alert(`Quick View: ${product.title}`);
+  };
+
   return (
     <>
       <Helmet>
         <title>Our Products | Equinox Supplies</title>
         <meta
           name="description"
-          content="Explore our wide range of premium hospitality supplies including linens, leather products, amenities, and more."
+          content="Discover our premium hospitality supplies, featuring luxurious linens and bespoke corporate and promotional gifts."
         />
       </Helmet>
 
+      <style>{`
+        @keyframes fadeIn {
+          from { opacity: 0; transform: translateY(10px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in {
+          animation: fadeIn 0.5s ease-out;
+        }
+      `}</style>
+
       <Hero
-        title="Our Premium Hospitality Products"
-        subtitle="Discover world-class supplies designed to elevate the guest experience in luxury hotels."
-        backgroundImage="https://images.unsplash.com/photo-1551518919-7e8aaae7e393?ixlib=rb-4.0.3&auto=format&fit=crop&w=1500&q=80"
+        title="Premium Hospitality Products"
+        subtitle="Explore our curated collections, with a focus on luxurious linens and personalized corporate gifts."
+        backgroundImage="/images/Hospitality.jpeg"
         primaryButtonText="Contact Us"
         primaryButtonLink="/contact"
         secondaryButtonText="View Categories"
         secondaryButtonLink="#categories"
       />
 
-      <section id="categories" className="py-20 bg-gray-50">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <span className="text-teal-500 font-medium mb-2 block">OUR COLLECTIONS</span>
-            <h2 className="font-playfair text-3xl md:text-4xl font-bold mb-4">Exceptional Hospitality Products</h2>
-            <p className="text-lg text-charcoal-400 max-w-3xl mx-auto">
-              Explore our wide range of premium hospitality supplies, designed to elevate the guest experience in luxury hotels across the Middle East.
+      <section id="categories" className="py-16 sm:py-20 bg-gray-50">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12 sm:mb-16">
+            <span className="text-teal-600 font-semibold mb-2 block text-sm sm:text-base">OUR COLLECTIONS</span>
+            <h2 className="font-playfair text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 text-gray-900">
+              Exceptional Hospitality Products
+            </h2>
+            <p className="text-base sm:text-lg text-gray-700 max-w-3xl mx-auto">
+              Discover our premium hospitality supplies, with a special emphasis on luxurious linens and bespoke corporate and promotional gifts.
             </p>
           </div>
 
-          {/* Product Categories Tabs */}
-          <div className="mb-12">
-            <div className="flex flex-wrap justify-center gap-4 mb-8">
-              {['all', 'linens', 'leather', 'amenities', 'eco', 'os-e', 'ff-e'].map((category) => (
+          {/* Sticky Category Tabs */}
+          <div className="sticky top-0 z-10 bg-gray-50 py-4 -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 shadow-sm">
+            <div className="flex flex-wrap justify-center gap-2 sm:gap-4">
+              {['all', 'linens', 'gifts', 'amenities', 'eco', 'leather', 'os-e', 'ff-e'].map((category) => (
                 <button
                   key={category}
-                  className={`py-2 px-6 rounded-full ${
+                  className={`relative py-2 px-4 sm:px-6 rounded-full text-sm sm:text-base font-semibold transition-all duration-300 ${
                     activeCategory === category
-                      ? 'bg-teal-500 text-white'
-                      : 'bg-white text-charcoal-500 hover:bg-teal-500 hover:text-white'
-                  } transition-colors font-medium`}
+                      ? 'bg-gradient-to-r from-teal-600 to-teal-500 text-white shadow-lg'
+                      : 'bg-white text-gray-700 hover:bg-teal-50 hover:text-teal-700'
+                  } flex items-center`}
                   onClick={() => handleCategoryChange(category)}
                 >
                   {category === 'all'
@@ -196,52 +234,76 @@ const Products = () => {
                     ? 'OS&E'
                     : category === 'ff-e'
                     ? 'FF&E'
+                    : category === 'gifts'
+                    ? 'Corporate Gifts'
                     : category.charAt(0).toUpperCase() + category.slice(1)}
+                  {(category === 'linens' || category === 'gifts') && (
+                    <Star className="ml-2 h-4 w-4 text-yellow-400" aria-hidden="true" />
+                  )}
                 </button>
               ))}
             </div>
           </div>
 
           {/* Products Grid with Slideshow */}
-          <div className="mb-12">
+          <div className="mt-8 sm:mt-12">
             {activeCategory !== 'all' && slideshowImages[activeCategory] && (
               <ProductSlideshow images={slideshowImages[activeCategory]} category={activeCategory} />
             )}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
               {filteredProducts.map((product) => (
-                <ProductCard
+                <div
                   key={product.id}
-                  title={product.title}
-                  description={product.description}
-                  image={product.image}
-                  link={`/contact#quote?product=${product.title}`}
-                  linkText="Request Details"
-                  icon={<ArrowRight className="ml-2 h-4 w-4" />}
-                  category={product.category}
-                  details={product.details}
-                  features={product.features}
-                  materials={product.materials}
-                />
+                  className="transform transition-transform hover:scale-105 duration-300"
+                >
+                  <ProductCard
+                    title={product.title}
+                    description={product.description}
+                    image={product.image}
+                    link={`/contact#quote?product=${product.title}`}
+                    linkText="Request Details"
+                    icon={<ArrowRight className="ml-2 h-4 w-4" />}
+                    category={product.category}
+                    details={product.details}
+                    features={product.features}
+                    materials={product.materials}
+                  />
+                  {/* <button
+                    className="mt-2 w-full py-2 text-sm text-teal-600 hover:text-teal-800 font-semibold"
+                    onClick={() => handleQuickView(product)}
+                    aria-label={`Quick view for ${product.title}`}
+                  >
+                    Quick View
+                  </button> */}
+                </div>
               ))}
             </div>
 
             {filteredProducts.length === 0 && (
               <div className="text-center py-12">
-                <p className="text-xl text-charcoal-400">No products found in this category.</p>
+                <p className="text-lg sm:text-xl text-gray-700">No products found in this category.</p>
               </div>
             )}
           </div>
         </div>
       </section>
 
-      <section className="py-16">
-        <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto">
-            <h2 className="font-playfair text-3xl font-bold mb-8 text-center">Product Categories Overview</h2>
+      <section className="py-16 sm:py-20 bg-gradient-to-b from-gray-50 to-white">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-5xl mx-auto">
+            <h2 className="font-playfair text-3xl sm:text-4xl lg:text-5xl font-bold mb-12 text-center text-gray-900">
+              Explore Our Premium Categories
+            </h2>
 
-            <div className="space-y-12">
-              <div id="linens" className="scroll-mt-24 p-6 transition-all duration-300 hover:bg-gray-50 rounded-lg">
-                <h3 className="font-playfair text-2xl font-semibold mb-4 text-teal-500 flex items-center">
+            <div className="space-y-16">
+              {/* Featured Banner for Linens */}
+              <div className="bg-gradient-to-r from-teal-600 to-teal-500 text-white p-6 rounded-xl mb-8 text-center">
+                <h3 className="font-playfair text-2xl sm:text-3xl font-semibold mb-2">Featured: Luxurious Linens</h3>
+                <p className="text-sm sm:text-base">Experience the pinnacle of comfort with our premium cotton linens.</p>
+              </div>
+
+              <div id="linens" className="scroll-mt-24 p-6 sm:p-8 bg-white rounded-xl shadow-lg transition-all duration-300 hover:shadow-xl">
+                <h3 className="font-playfair text-2xl sm:text-3xl font-semibold mb-4 text-teal-600 flex items-center">
                   <a href="#linens" className="transition-all flex items-center group">
                     Linens
                     <svg
@@ -264,21 +326,25 @@ const Products = () => {
                   </a>
                 </h3>
                 <ProductSlideshow images={slideshowImages.linens} category="linens" />
-                <p className="text-charcoal-400 mb-4">
-                  Luxury bed linens is the hallmark of any good hotel. Equinox Supplies is specialized in white hotel bedding with a quality finish,
-                  creating a luxurious feel favoured by the most prestigious establishments. Our bed linen collection includes pillowcases, duvet covers,
-                  flat sheets, fitted sheets, duvets, pillow protectors, cushions & pillows and curtains etc.
+                <p className="text-gray-700 mb-4 text-sm sm:text-base">
+                  Luxury bed linens define the guest experience in top-tier hotels. Our collection, crafted from the finest cotton with
+                  thread counts from 300 to 1000, offers unmatched comfort and elegance.
                 </p>
-                <p className="text-charcoal-400">
-                  Our linens are crafted from the finest Egyptian and Turkish cotton, with thread counts ranging from 300 to 1000 to suit various hotel
-                  categories and preferences. We offer personalized embroidery and custom designs to align with your hotel's unique brand identity.
+                <p className="text-gray-700 text-sm sm:text-base">
+                  Personalize your linens with custom embroidery and designs to reflect your brand’s identity, ensuring a memorable stay for your guests.
                 </p>
               </div>
 
-              <div id="leather" className="scroll-mt-24 p-6 transition-all duration-300 hover:bg-gray-50 rounded-lg">
-                <h3 className="font-playfair text-2xl font-semibold mb-4 text-teal-500 flex items-center">
-                  <a href="#leather" className="transition-all flex items-center group">
-                    Leather Products
+              {/* Featured Banner for Corporate and Promotional Gifts */}
+              <div className="bg-gradient-to-r from-teal-600 to-teal-500 text-white p-6 rounded-xl mb-8 text-center">
+                <h3 className="font-playfair text-2xl sm:text-3xl font-semibold mb-2">Featured: Corporate & Promotional Gifts</h3>
+                <p className="text-sm sm:text-base">Elevate your brand with our bespoke gift items, perfect for VIPs and corporate clients.</p>
+              </div>
+
+              <div id="gifts" className="scroll-mt-24 p-6 sm:p-8 bg-white rounded-xl shadow-lg transition-all duration-300 hover:shadow-xl">
+                <h3 className="font-playfair text-2xl sm:text-3xl font-semibold mb-4 text-teal-600 flex items-center">
+                  <a href="#gifts" className="transition-all flex items-center group">
+                    Corporate & Promotional Gifts
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       viewBox="0 0 20 20"
@@ -298,68 +364,49 @@ const Products = () => {
                     </svg>
                   </a>
                 </h3>
-                <ProductSlideshow images={slideshowImages.leather} category="leather" />
-                <p className="text-charcoal-400 mb-4">
-                  We work towards a common mission of development of custom designed leather products for our clients to meet their standards with confidence.
-                  As one of the leading customized leather products suppliers in the GCC, we stand out with handmade leather craftsmanship that has already
-                  captured the hearts of our customers.
+                <ProductSlideshow images={slideshowImages.gifts} category="gifts" />
+                <p className="text-gray-700 mb-4 text-sm sm:text-base">
+                  Our corporate and promotional gifts are designed to leave a lasting impression. From elegant leather portfolios to branded gift boxes, each
+                  item is crafted to enhance your hotel’s prestige and delight your guests.
                 </p>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                  <div className="bg-white p-5 rounded-lg shadow-sm">
-                    <h4 className="font-medium text-teal-600 mb-2">Corporate Leather Gifts</h4>
-                    <ul className="text-charcoal-400 list-disc pl-5 space-y-1">
-                      <li>Customized leather portfolios and folders</li>
-                      <li>Business card holders and wallets</li>
-                      <li>Executive desk accessories</li>
-                      <li>Branded luggage tags</li>
-                      <li>Elegant presentation boxes for VIP guests</li>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-6">
+                  <div className="bg-gray-50 p-5 rounded-lg">
+                    <h4 className="font-semibold text-teal-600 mb-2">Corporate Gift Items</h4>
+                    <ul className="text-gray-700 list-disc pl-5 space-y-1 text-sm sm:text-base">
+                      <li>Customized leather portfolios and notebooks</li>
+                      <li>Engraved business card holders</li>
+                      <li>Premium pen sets with hotel branding</li>
+                      <li>Executive desk organizers</li>
+                      <li>Personalized gift boxes for VIP guests</li>
                     </ul>
                   </div>
-                  <div className="bg-white p-5 rounded-lg shadow-sm">
-                    <h4 className="font-medium text-teal-600 mb-2">Premium Leather Bags & Luggage</h4>
-                    <ul className="text-charcoal-400 list-disc pl-5 space-y-1">
-                      <li>Travel bags and luggage sets</li>
-                      <li>Laptop and document bags</li>
-                      <li>Custom gym and sports bags</li>
-                      <li>Elegant backpacks and shoulder bags</li>
-                      <li>Special event and conference bags</li>
+                  <div className="bg-gray-50 p-5 rounded-lg">
+                    <h4 className="font-semibold text-teal-600 mb-2">Promotional Merchandise</h4>
+                    <ul className="text-gray-700 list-disc pl-5 space-y-1 text-sm sm:text-base">
+                      <li>Branded luggage tags and keychains</li>
+                      <li>Custom USB drives and tech accessories</li>
+                      <li>Eco-friendly tote bags with logo</li>
+                      <li>Personalized travel kits</li>
+                      <li>Event-specific gift sets</li>
                     </ul>
                   </div>
                 </div>
 
-                <p className="text-charcoal-400 mb-4">
-                  Our artisans use premium full-grain and top-grain leather sourced ethically, ensuring durability and luxurious aesthetics. Each piece can be
-                  customized with hotel logos, patterns, and even guest names for a truly personalized experience.
-                </p>
-
                 <div className="bg-teal-50 p-5 rounded-lg">
-                  <h4 className="font-medium text-teal-700 mb-3">Our Leather Craftsmanship Process</h4>
-                  <ol className="list-decimal pl-5 text-charcoal-500 space-y-2">
-                    <li>
-                      <span className="font-medium">Premium Material Selection:</span> We use only the finest quality leather that ages beautifully and stands
-                      the test of time.
-                    </li>
-                    <li>
-                      <span className="font-medium">Customization:</span> We work closely with clients to incorporate their branding elements and specific
-                      requirements.
-                    </li>
-                    <li>
-                      <span className="font-medium">Hand-Crafting:</span> Our skilled artisans handcraft each piece with meticulous attention to detail.
-                    </li>
-                    <li>
-                      <span className="font-medium">Quality Assurance:</span> Every product undergoes rigorous quality checks before delivery.
-                    </li>
-                    <li>
-                      <span className="font-medium">After-Sales Support:</span> We stand behind our products with excellent customer service and maintenance
-                      advice.
-                    </li>
-                  </ol>
+                  <h4 className="font-semibold text-teal-700 mb-3">Why Choose Our Gifts?</h4>
+                  <ul className="text-gray-700 list-disc pl-5 space-y-2 text-sm sm:text-base">
+                    <li><span className="font-medium">Premium Quality:</span> Crafted from high-grade materials for durability and elegance.</li>
+                    <li><span className="font-medium">Customization:</span> Tailored designs with your logo, colors, and messaging.</li>
+                    <li><span className="font-medium">Versatility:</span> Suitable for corporate events, guest giveaways, and VIP appreciation.</li>
+                    <li><span className="font-medium">Brand Impact:</span> Reinforces your hotel’s identity with every gift.</li>
+                    <li><span className="font-medium">Fast Turnaround:</span> Efficient production and delivery to meet your deadlines.</li>
+                  </ul>
                 </div>
               </div>
 
-              <div id="amenities" className="scroll-mt-24 p-6 transition-all duration-300 hover:bg-gray-50 rounded-lg">
-                <h3 className="font-playfair text-2xl font-semibold mb-4 text-teal-500 flex items-center">
+              <div id="amenities" className="scroll-mt-24 p-6 sm:p-8 bg-white rounded-xl shadow-lg transition-all duration-300 hover:shadow-xl">
+                <h3 className="font-playfair text-2xl sm:text-3xl font-semibold mb-4 text-teal-600 flex items-center">
                   <a href="#amenities" className="transition-all flex items-center group">
                     Hotel Amenities
                     <svg
@@ -382,17 +429,13 @@ const Products = () => {
                   </a>
                 </h3>
                 <ProductSlideshow images={slideshowImages.amenities} category="amenities" />
-                <p className="text-charcoal-400 mb-4">
-                  With the arrival of several new hotel brands, competition from short-term rentals, and new technologies, it's easy to get overwhelmed when
-                  trying to make your hotel stand out in the eyes of guests. Renovating your property is expensive and time-consuming, but hotel amenities are
-                  an easy and high-impact way to stand out in your competitive set. Equinox Supplies is well equipped to take up such challenges with our
-                  high-quality products.
+                <p className="text-gray-700 mb-4 text-sm sm:text-base">
+                  Our hotel amenities elevate guest experiences with luxury soaps, custom shampoos, and premium bathrobes, tailored to your brand.
                 </p>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                  <div className="bg-white p-5 rounded-lg shadow-sm">
-                    <h4 className="font-medium text-teal-600 mb-2">Premium Bathroom Amenities</h4>
-                    <ul className="text-charcoal-400 list-disc pl-5 space-y-1">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-6">
+                  <div className="bg-gray-50 p-5 rounded-lg">
+                    <h4 className="font-semibold text-teal-600 mb-2">Premium Bathroom Amenities</h4>
+                    <ul className="text-gray-700 list-disc pl-5 space-y-1 text-sm sm:text-base">
                       <li>Luxury soaps and bath products</li>
                       <li>Custom-formulated shampoos and conditioners</li>
                       <li>Body lotions and moisturizers</li>
@@ -400,9 +443,9 @@ const Products = () => {
                       <li>Luxurious dispenser systems</li>
                     </ul>
                   </div>
-                  <div className="bg-white p-5 rounded-lg shadow-sm">
-                    <h4 className="font-medium text-teal-600 mb-2">Guest Comfort Items</h4>
-                    <ul className="text-charcoal-400 list-disc pl-5 space-y-1">
+                  <div className="bg-gray-50 p-5 rounded-lg">
+                    <h4 className="font-semibold text-teal-600 mb-2">Guest Comfort Items</h4>
+                    <ul className="text-gray-700 list-disc pl-5 space-y-1 text-sm sm:text-base">
                       <li>Premium bathrobes and slippers</li>
                       <li>Luxury dental and shaving kits</li>
                       <li>Sleep enhancement products</li>
@@ -411,81 +454,64 @@ const Products = () => {
                     </ul>
                   </div>
                 </div>
-
-                <div className="bg-gradient-to-r from-teal-50 to-gray-50 p-6 rounded-lg mb-6">
-                  <h4 className="font-medium text-teal-700 mb-3">Why Our Amenities Stand Out</h4>
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <div className="text-center p-4">
-                      <div className="text-teal-500 mb-3 flex justify-center">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          viewBox="0 0 24 24"
-                          fill="currentColor"
-                          className="w-10 h-10"
-                        >
-                          <path
-                            fillRule="evenodd"
-                            d="M12 1.5a.75.75 0 01.75.75V4.5a.75.75 0 01-1.5 0V2.25A.75.75 0 0112 1.5zM5.636 4.136a.75.75 0 011.06 0l1.592 1.591a.75.75 0 01-1.061 1.06l-1.591-1.59a.75.75 0 010-1.061zm12.728 0a.75.75 0 010 1.06l-1.591 1.592a.75.75 0 01-1.06-1.061l1.59-1.591a.75.75 0 011.061 0zm-6.816 4.496a.75.75 0 01.82.311l5.228 7.917a.75.75 0 01-.777 1.148l-2.097-.43 1.045 3.9a.75.75 0 01-1.45.388l-1.044-3.899-1.601 1.42a.75.75 0 01-1.247-.606l.569-9.47a.75.75 0 01.554-.68zM3 10.5a.75.75 0 01.75-.75H6a.75.75 0 010 1.5H3.75A.75.75 0 013 10.5zm14.25 0a.75.75 0 01.75-.75h2.25a.75.75 0 010 1.5H18a.75.75 0 01-.75-.75zm-8.962 3.712a.75.75 0 010 1.061l-1.591 1.591a.75.75 0 11-1.061-1.06l1.591-1.592a.75.75 0 011.06 0z"
-                            clipRule="evenodd"
-                          />
-                        </svg>
-                      </div>
-                      <h5 className="font-medium mb-1">Premium Quality</h5>
-                      <p className="text-sm text-charcoal-500">Sourced from leading manufacturers with stringent quality controls</p>
-                    </div>
-                    <div className="text-center p-4">
-                      <div className="text-teal-500 mb-3 flex justify-center">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          viewBox="0 0 24 24"
-                          fill="currentColor"
-                          className="w-10 h-10"
-                        >
-                          <path d="M21.731 2.269a2.625 2.625 0 00-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 000-3.712zM19.513 8.199l-3.712-3.712-8.4 8.4a5.25 5.25 0 00-1.32 2.214l-.8 2.685a.75.75 0 00.933.933l2.685-.8a5.25 5.25 0 002.214-1.32l8.4-8.4z" />
-                          <path d="M5.25 5.25a3 3 0 00-3 3v10.5a3 3 0 003 3h10.5a3 3 0 003-3V13.5a.75.75 0 00-1.5 0v5.25a1.5 1.5 0 01-1.5 1.5H5.25a1.5 1.5 0 01-1.5-1.5V8.25a1.5 1.5 0 011.5-1.5h5.25a.75.75 0 000-1.5H5.25z" />
-                        </svg>
-                      </div>
-                      <h5 className="font-medium mb-1">Customization</h5>
-                      <p className="text-sm text-charcoal-500">Tailored to your brand with custom packaging, scents, and formulations</p>
-                    </div>
-                    <div className="text-center p-4">
-                      <div className="text-teal-500 mb-3 flex justify-center">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          viewBox="0 0 24 24"
-                          fill="currentColor"
-                          className="w-10 h-10"
-                        >
-                          <path
-                            fillRule="evenodd"
-                            d="M12.963 2.286a.75.75 0 00-1.071-.136 9.742 9.742 0 00-3.539 6.177A7.547 7.547 0 016.648 6.61a.75.75 0 00-1.152.082A9 9 0 1017.25 10.5a.75.75 0 10-1.5 0 7.5 7.5 0 11-1.769-4.858l.463.171a.75.75 0 10.522-1.41l-.464-.172a.75.75 0 00-.497 0A9.74 9.74 0 0012.963 2.286z"
-                            clipRule="evenodd"
-                          />
-                          <path
-                            fillRule="evenodd"
-                            d="M16.5 10.5a.75.75 0 01-.75.75h-3a.75.75 0 010-1.5h3a.75.75 0 01.75.75z"
-                            clipRule="evenodd"
-                          />
-                        </svg>
-                      </div>
-                      <h5 className="font-medium mb-1">Timely Delivery</h5>
-                      <p className="text-sm text-charcoal-500">Reliable supply chain ensuring your amenities arrive when needed</p>
-                    </div>
-                  </div>
-                </div>
-
-                <p className="text-charcoal-400">
-                  Our amenities product portfolio covers a variety of items ranging from toiletries, personal care, coffee kits, bathrobes, and tissues. We
-                  partner with luxury cosmetic brands to create bespoke formulations that speak to the discerning tastes of your guests while embodying your
-                  hotel's unique identity. Whether you're looking for economical options or ultra-luxury amenities, we have solutions to meet every budget and
-                  brand standard.
-                </p>
               </div>
 
-              <div id="eco" className="scroll-mt-24 p-6 transition-all duration-300 hover:bg-gray-50 rounded-lg">
-                <h3 className="font-playfair text-2xl font-semibold mb-4 text-teal-500 flex items-center">
+              <div id="eco" className="scroll-mt-24 p-6 sm:p-8 bg-white rounded-xl shadow-lg transition-all duration-300 hover:shadow-xl">
+                <h3 className="font-playfair text-2xl sm:text-3xl font-semibold mb-4 text-teal-600 flex items-center">
                   <a href="#eco" className="transition-all flex items-center group">
                     Eco-Friendly Products
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 20 20"
+                    
+                      fill="currentColor"
+                      className="w-5 h-5 ml-2 opacity-0 group-hover:opacity-100 transition-all translate-x-0 group-hover:translate-x-1"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M4.25 5.5a.75.75 0 00-.75.75v8.5c0 .414.336.75.75.75h8.5a.75.75 0 00.75-.75v-4a.75.75 0 011.5 0v4A2.25 2.25 0 0112.75 17h-8.5A2.25 2.25 0 012 14.75v-8.5A2.25 2.25 0 014.25 4h5a.75.75 0 010 1.5h-5z"
+                        clipRule="evenodd"
+                      />
+                      <path
+                        fillRule="evenodd"
+                        d="M6.194 12.753a.75.75 0 001.06.053L16.5 4.44v2.81a.75.75 0 001.5 0v-4.5a.75.75 0 00-.75-.75h-4.5a.75.75 0 000 1.5h2.553l-9.056 8.194a.75.75 0 00-.053 1.06z"
+                        clipRule="evenodd"
+                      />
+                    </svg>
+                  </a>
+                </h3>
+                <ProductSlideshow images={slideshowImages.eco} category="eco" />
+                <p className="text-gray-700 mb-4 text-sm sm:text-base">
+                  Our eco-friendly products, including bamboo toothbrushes and jute loofahs, promote sustainability without compromising quality.
+                </p>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-6">
+                  <div className="bg-gray-50 p-5 rounded-lg">
+                    <h4 className="font-semibold text-teal-600 mb-2">Bamboo Toothbrushes & Dental Kits</h4>
+                    <ul className="text-gray-700 list-disc pl-5 space-y-1 text-sm sm:text-base">
+                      <li>S-curve design for adults and C-curve for children</li>
+                      <li>Biodegradable bamboo handle</li>
+                      <li>Plant-based bristles</li>
+                      <li>Environmentally friendly packaging</li>
+                      <li>Custom branding options available</li>
+                    </ul>
+                  </div>
+                  <div className="bg-gray-50 p-5 rounded-lg">
+                    <h4 className="font-semibold text-teal-600 mb-2">Natural Bath Accessories</h4>
+                    <ul className="text-gray-700 list-disc pl-5 space-y-1 text-sm sm:text-base">
+                      <li>Neem combs in various designs</li>
+                      <li>Wooden shaving razors</li>
+                      <li>Jute loofah for natural exfoliation</li>
+                      <li>Bamboo tongue cleaners</li>
+                      <li>Bamboo and coconut drinking straws</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div id="leather" className="scroll-mt-24 p-6 sm:p-8 bg-white rounded-xl shadow-lg transition-all duration-300 hover:shadow-xl">
+                <h3 className="font-playfair text-2xl sm:text-3xl font-semibold mb-4 text-teal-600 flex items-center">
+                  <a href="#leather" className="transition-all flex items-center group">
+                    Leather Products
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       viewBox="0 0 20 20"
@@ -505,43 +531,32 @@ const Products = () => {
                     </svg>
                   </a>
                 </h3>
-                <ProductSlideshow images={slideshowImages.eco} category="eco" />
-                <p className="text-charcoal-400 mb-4">
-                  With a keen insight into the wellbeing of our environment, our eco-friendly products have been designed to reduce unnecessary waste with the
-                  use of biodegradable materials and recyclable packaging. We believe in promoting sustainable hospitality practices.
+                <ProductSlideshow images={slideshowImages.leather} category="leather" />
+                <p className="text-gray-700 mb-4 text-sm sm:text-base">
+                  Our leather products, including bags and accessories, are crafted with precision for durability and style.
                 </p>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                  <div className="bg-white p-5 rounded-lg shadow-sm">
-                    <h4 className="font-medium text-teal-600 mb-2">Bamboo Toothbrushes & Dental Kits</h4>
-                    <ul className="text-charcoal-400 list-disc pl-5 space-y-1">
-                      <li>S-curve design for adults and C-curve for children</li>
-                      <li>Biodegradable bamboo handle</li>
-                      <li>Plant-based bristles</li>
-                      <li>Environmentally friendly packaging</li>
-                      <li>Custom branding options available</li>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-6">
+                  <div className="bg-gray-50 p-5 rounded-lg">
+                    <h4 className="font-semibold text-teal-600 mb-2">Leather Accessories</h4>
+                    <ul className="text-gray-700 list-disc pl-5 space-y-1 text-sm sm:text-base">
+                      <li>Business card holders and wallets</li>
+                      <li>Executive desk accessories</li>
+                      <li>Branded luggage tags</li>
                     </ul>
                   </div>
-                  <div className="bg-white p-5 rounded-lg shadow-sm">
-                    <h4 className="font-medium text-teal-600 mb-2">Natural Bath Accessories</h4>
-                    <ul className="text-charcoal-400 list-disc pl-5 space-y-1">
-                      <li>Neem combs in various designs</li>
-                      <li>Wooden shaving razors</li>
-                      <li>Jute loofah for natural exfoliation</li>
-                      <li>Bamboo tongue cleaners</li>
-                      <li>Bamboo and coconut drinking straws</li>
+                  <div className="bg-gray-50 p-5 rounded-lg">
+                    <h4 className="font-semibold text-teal-600 mb-2">Leather Bags & Luggage</h4>
+                    <ul className="text-gray-700 list-disc pl-5 space-y-1 text-sm sm:text-base">
+                      <li>Travel bags and luggage sets</li>
+                      <li>Laptop and document bags</li>
+                      <li>Elegant backpacks and shoulder bags</li>
                     </ul>
                   </div>
                 </div>
-                <p className="text-charcoal-400">
-                  Equinox Supplies is committed to sustainable hospitality solutions that don't compromise on quality or guest experience. Our eco-friendly
-                  products are crafted with specialized technical expertise to ensure durability and performance while minimizing environmental impact. By
-                  choosing our sustainable products, you're not only enhancing your guest experience but also demonstrating your commitment to environmental
-                  responsibility.
-                </p>
               </div>
 
-              <div id="os-e" className="scroll-mt-24 p-6 transition-all duration-300 hover:bg-gray-50 rounded-lg">
-                <h3 className="font-playfair text-2xl font-semibold mb-4 text-teal-500 flex items-center">
+              <div id="os-e" className="scroll-mt-24 p-6 sm:p-8 bg-white rounded-xl shadow-lg transition-all duration-300 hover:shadow-xl">
+                <h3 className="font-playfair text-2xl sm:text-3xl font-semibold mb-4 text-teal-600 flex items-center">
                   <a href="#os-e" className="transition-all flex items-center group">
                     Operating Supplies and Equipment (OS&E)
                     <svg
@@ -564,13 +579,10 @@ const Products = () => {
                   </a>
                 </h3>
                 <ProductSlideshow images={slideshowImages['os-e']} category="os-e" />
-                <p className="text-charcoal-400 mb-4">
-                  Our goal is to build long lasting relationships with our esteemed customers, and to remain as leaders in OS&E. We offer exceptional value,
-                  and understand the customer needs. We conduct business with integrity and honesty, demonstrating a passion with exceptional commitment to the
-                  beloved customers and to the market.
+                <p className="text-gray-700 mb-4 text-sm sm:text-base">
+                  Our OS&E products, from guestroom essentials to banquet supplies, are designed for durability and functionality.
                 </p>
-                <p className="text-charcoal-400 mb-4">We offer wide range to OS&E products such as:</p>
-                <ul className="list-disc pl-6 text-charcoal-400 grid grid-cols-1 md:grid-cols-2 gap-2">
+                <ul className="list-disc pl-6 text-gray-700 grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm sm:text-base">
                   <li>Guestrooms (hangers, kettle, bins, safe box etc)</li>
                   <li>Apartments (includes tableware, utensils etc)</li>
                   <li>Meetings Conference and banquets</li>
@@ -583,8 +595,8 @@ const Products = () => {
                 </ul>
               </div>
 
-              <div id="ff-e" className="scroll-mt-24 p-6 transition-all duration-300 hover:bg-gray-50 rounded-lg">
-                <h3 className="font-playfair text-2xl font-semibold mb-4 text-teal-500 flex items-center">
+              <div id="ff-e" className="scroll-mt-24 p-6 sm:p-8 bg-white rounded-xl shadow-lg transition-all duration-300 hover:shadow-xl">
+                <h3 className="font-playfair text-2xl sm:text-3xl font-semibold mb-4 text-teal-600 flex items-center">
                   <a href="#ff-e" className="transition-all flex items-center group">
                     Furnishings, Fixtures and Equipment (FF&E)
                     <svg
@@ -607,11 +619,10 @@ const Products = () => {
                   </a>
                 </h3>
                 <ProductSlideshow images={slideshowImages['ff-e']} category="ff-e" />
-                <p className="text-charcoal-400 mb-4">
-                  We also offer high quality, wide range of FF&E products for our customers as per their requirements and it can also be customised to your
-                  wishes.
+                <p className="text-gray-700 mb-4 text-sm sm:text-base">
+                  Our FF&E offerings, from custom headboards to chandeliers, are tailored to enhance your property’s aesthetic.
                 </p>
-                <ul className="list-disc pl-6 text-charcoal-400 grid grid-cols-1 md:grid-cols-2 gap-2">
+                <ul className="list-disc pl-6 text-gray-700 grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm sm:text-base">
                   <li>Case goods (bedroom headboard, side table, coffee table)</li>
                   <li>Loose furniture (eg Chairs Tables)</li>
                   <li>Decorative Lighting</li>
@@ -634,8 +645,8 @@ const Products = () => {
       </section>
 
       <CTASection
-        title="Need Custom Products for Your Property?"
-        subtitle="Our team of experts can help you create bespoke solutions tailored to your brand and guest expectations."
+        title="Need Custom Linens or Corporate Gifts?"
+        subtitle="Our experts can craft bespoke solutions to elevate your brand and guest experience."
         primaryButtonText="Request a Quote"
         primaryButtonLink="/contact#quote"
         secondaryButtonText="Contact Sales Team"

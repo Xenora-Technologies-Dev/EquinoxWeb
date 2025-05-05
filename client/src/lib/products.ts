@@ -15,11 +15,11 @@ export const featuredProducts: Product[] = [
     id: '1',
     title: 'Premium Linens',
     description: 'Luxury bed linens with high thread count fabrics and exceptional finish for a truly indulgent guest experience.',
-    image: 'https://images.unsplash.com/photo-1584132967334-10e028bd69f7?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80',
+    image: '/images/bed-linen1.jpg',
     category: 'linens',
     link: '/products#linens',
     features: [
-      'Egyptian and Turkish cotton with thread counts from 300-1000',
+      'Cotton with thread counts from 300-1000',
       'Custom embroidery available',
       'Hypoallergenic options',
       'Stain-resistant treatments'
@@ -29,7 +29,7 @@ export const featuredProducts: Product[] = [
     id: '2',
     title: 'Custom Leather Products',
     description: 'Hand-crafted leather products from wallets to luggage, designed to enhance your brand\'s prestige.',
-    image: 'https://images.unsplash.com/photo-1564365129926-fad9d8950bf7?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80',
+    image: '/images/Leather-Wallets-Manufacturer.jpg',
     category: 'leather',
     link: '/products#leather',
     materials: [
@@ -43,7 +43,7 @@ export const featuredProducts: Product[] = [
     id: '3',
     title: 'Eco-Friendly Amenities',
     description: 'Sustainable toiletries and guest amenities crafted from bamboo and other eco-friendly materials.',
-    image: 'https://images.unsplash.com/photo-1584917865442-de89df76afd3?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80',
+    image: '/images/handmade-bamboo-bottles.webp',
     category: 'eco',
     link: '/products#eco',
     details: [
@@ -75,11 +75,11 @@ export const allProducts: Product[] = [
     id: '5',
     title: 'Hotel Bathrobes & Towels',
     description: 'Plush bathrobes and premium towel sets that offer guests exceptional comfort and absorbency.',
-    image: 'https://images.unsplash.com/photo-1576602976047-174e57a47881?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80',
+    image: '/images/HotelTowels.jpg',
     category: 'linens',
     link: '/products#linens',
     features: [
-      'Egyptian cotton towels in multiple weights',
+      'Cotton towels in multiple weights',
       'Waffle, terry, or velour bathrobes',
       'Custom embroidery for branding',
       'Quick-drying technology'
@@ -89,7 +89,7 @@ export const allProducts: Product[] = [
     id: '6',
     title: 'Leather Corporate Gifts',
     description: 'Premium leather products perfect for corporate gifting and VIP guest amenities.',
-    image: 'https://images.unsplash.com/photo-1607435097405-db48f377bff6?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80',
+    image: '/images/leather-corporate-gift-ideas-1.jpg',
     category: 'leather',
     link: '/products#leather',
     details: [
@@ -131,7 +131,7 @@ export const allProducts: Product[] = [
     id: '9',
     title: 'Bamboo Dental Kits',
     description: 'Eco-friendly dental kits featuring bamboo toothbrushes and biodegradable packaging.',
-    image: 'https://images.unsplash.com/photo-1588528402605-1f9d0eb7a6d6?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80',
+    image: '/images/bamboo-teeth-dental-kit.webp',
     category: 'eco',
     link: '/products#eco',
     features: [
@@ -145,7 +145,7 @@ export const allProducts: Product[] = [
     id: '10',
     title: 'Natural Loofah & Bath Products',
     description: 'Eco-conscious bath and shower accessories made from natural materials like jute and loofah.',
-    image: 'https://images.unsplash.com/photo-1546552768-9e3a5e790509?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80',
+    image: '/images/vetiver-loofah.jpeg',
     category: 'eco',
     link: '/products#eco',
     materials: [
@@ -159,7 +159,7 @@ export const allProducts: Product[] = [
     id: '11',
     title: 'Guest Room OS&E',
     description: 'Premium hangers, kettles, safe boxes, and other essential guest room operating supplies.',
-    image: 'https://images.unsplash.com/photo-1575429198097-0414ec08e8cd?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80',
+    image: '/images/oSEsupplies.jpeg',
     category: 'os-e',
     link: '/products#os-e',
     details: [
@@ -173,7 +173,7 @@ export const allProducts: Product[] = [
     id: '12',
     title: 'Food & Beverage Equipment',
     description: 'High-quality tableware, utensils, and serving accessories for restaurants, banquets, and room service.',
-    image: 'https://images.unsplash.com/photo-1622633721982-9f9e07dd4759?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80',
+    image: '/images/coffee-machine.webp',
     category: 'os-e',
     link: '/products#os-e',
     features: [
@@ -215,7 +215,7 @@ export const allProducts: Product[] = [
     id: '15',
     title: 'Bamboo Amenity Accessories',
     description: 'Sustainable bamboo amenity accessories including trays, organizers, and bathroom items.',
-    image: 'https://images.unsplash.com/photo-1584453147785-df0c9e5ba5d6?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80',
+    image: '/images/BambooAmanity.jpeg',
     category: 'eco',
     link: '/products#eco',
     details: [
